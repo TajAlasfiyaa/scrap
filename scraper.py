@@ -16,7 +16,7 @@ with open(input_file, "r", encoding="utf-8") as f:
     data = json.load(f)
 
 # Filter data (numbers 1-5)
-filtered_data = [entry for entry in data if 1 <= entry["Number"] <= 5]
+filtered_data = [entry for entry in data if 1 <= entry["Number"] <= 1000]
 
 # Function to scrape each contractor page
 def scrape_contractor(entry):
@@ -29,6 +29,8 @@ def scrape_contractor(entry):
     wait = WebDriverWait(driver, 3)
 
     url = entry["contractor"]
+     number = entry["Number"]
+            page = entry['page']
     try:
         driver.get(url)
         wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
@@ -41,19 +43,21 @@ def scrape_contractor(entry):
             contractor_name = None
 
         info = {
-            "URL": url,
-            "Contractor Name": contractor_name,
-            "رقم العضويه": None,
-            "حجم المنشأة": None,
-            "عدد الساعات التدريبية": None,
-            "العضوية": None,
-            "المدينة": None,
-            "المنطقه": None,
-            "رقم الجوال": None,
-            "الخدمة": None,
-            "عنوان": None,
-            "عضو منذ": None,
-            "البريد الإلكترونى": None,
+             "URL": url,
+                "Contractor Name": contractor_name,
+                "page": page,
+                "number":number,
+                "رقم العضويه": None,
+                "حجم المنشأة": None,
+                "عدد الساعات التدريبية": None,
+                "العضوية": None,
+                "المدينة": None,
+                "المنطقه": None,
+                "رقم الجوال": None,
+                "الخدمة": None,
+                "عنوان": None,
+                "عضو منذ": None,
+                "البريد الإلكترونى": None,
         }
 
         info_elements = driver.find_elements(By.CLASS_NAME, "info-name")
